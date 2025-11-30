@@ -1,0 +1,33 @@
+name: AWS VPC
+
+on:
+# push:
+   workflow_dispatch:
+#     inputs:
+#       branch:
+#         description: 'Branch to deploy'
+#         required: true
+#         default: main
+#         type: string
+
+
+
+jobs:
+  aws-vpc-deploy:
+    runs-on: self-hosted
+    steps:
+    - name: 'Checkout GitHub Action'
+      uses: actions/checkout@v4
+      # with:
+      #   ref: ${{ inputs.branch }}
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v5.1.0
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ vars.AWS_DEFAULT_REGION }}
+    - name: 'Deploy VPC with Terraform'
+      shell: powershell
+      run: |
+        terraform init
+        terraform destroy -auto-approve
