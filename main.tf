@@ -1,8 +1,4 @@
-provider "aws" {
-  region = var.aws_region # Usa el valor de la variable
 
-
-}
 
 # In a file named providers.tf or backend.tf referencia s3 config
 terraform {
